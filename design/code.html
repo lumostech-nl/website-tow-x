@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Towix | Towing Dispatch Command Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "briefing-red": "#EE6352",
+              "command-bg": "#01080a",
+              "hologram": "#00d4ff",
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk", "sans-serif"],
+              "mono": ["JetBrains Mono", "monospace"],
+            },
+            animation: {
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'scan-fast': 'scan 4s linear infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              scan: {
+                '0%': { top: '0%' },
+                '100%': { top: '100%' }
+              }
+            }
+          },
+        },
+      }
+    </script>
+<style type="text/tailwindcss">
+      @layer utilities {
+        .hologram-effect {
+          background: linear-gradient(180deg, rgba(0, 212, 255, 0.1) 0%, transparent 100%);
+          box-shadow: 0 0 50px rgba(0, 212, 255, 0.1), inset 0 0 20px rgba(0, 212, 255, 0.05);
+          backdrop-filter: blur(8px);
+        }
+        .scan-line {
+          width: 100%;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(238, 99, 82, 0.3), transparent);
+          position: absolute;
+          top: 0;
+          animation: scan 10s linear infinite;
+        }
+        .text-glow {
+          text-shadow: 0 0 20px rgba(238, 99, 82, 0.4);
+        }
+        .bg-noise {
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+          opacity: 0.03;
+        }
+        .volumetric-light {
+          background: radial-gradient(circle at 50% -20%, rgba(238, 99, 82, 0.15), transparent 70%);
+        }
+        .grid-overlay {
+          background-size: 40px 40px;
+          background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                            linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+        }
+      }
+    </style>
+</head>
+<body class="bg-command-bg font-headline text-slate-300 antialiased selection:bg-briefing-red/30 overflow-x-hidden">
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute inset-0 bg-noise"></div>
+<div class="absolute inset-0 grid-overlay"></div>
+<div class="absolute top-0 left-0 w-full h-full volumetric-light"></div>
+<div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-briefing-red/5 blur-[120px] rounded-full"></div>
+</div>
+<nav class="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-center border-b border-white/5 bg-command-bg/40 backdrop-blur-md">
+<div class="flex items-center gap-4">
+<div class="flex flex-col">
+<span class="text-xs font-mono tracking-[0.5em] text-briefing-red">DISPATCH PLATFORM</span>
+<span class="text-2xl font-bold text-white tracking-tighter">TOWIX <span class="text-briefing-red">/</span> PRO</span>
+</div>
+</div>
+<div class="hidden lg:flex items-center gap-12 font-mono text-[10px] tracking-[0.3em]">
+<a class="hover:text-briefing-red transition-colors" href="#objectives">[ SOLUTIONS ]</a>
+<a class="hover:text-briefing-red transition-colors" href="#assets">[ FEATURES ]</a>
+<a class="hover:text-briefing-red transition-colors" href="#timeline">[ WORKFLOW ]</a>
+<a class="hover:text-briefing-red transition-colors text-white border-b border-white/20 pb-1" href="#deployment">[ GET STARTED ]</a>
+</div>
+<div class="font-mono text-[10px] tracking-widest text-slate-500">
+            SYSTEM_STATUS: <span class="text-green-500 animate-pulse">OPTIMIZED</span>
+</div>
+</nav>
+<main class="relative z-10">
+<section class="min-h-screen flex flex-col items-center justify-center relative px-6 py-32 overflow-hidden">
+<!-- Technical UI Details Background Layer -->
+<div class="absolute inset-0 pointer-events-none opacity-40">
+<div class="scan-line"></div>
+<div class="absolute top-1/4 left-10 font-mono text-[10px] text-slate-600 flex flex-col gap-1">
+<span>LNG: -118.2437</span>
+<span>LAT: 34.0522</span>
+<div class="w-20 h-[1px] bg-white/10 mt-2"></div>
+</div>
+<div class="absolute bottom-1/4 right-10 font-mono text-[10px] text-slate-600 text-right flex flex-col items-end gap-1">
+<span>FLEET: ONLINE</span>
+<span>RESPONSE: 0.00034ms</span>
+<div class="w-20 h-[1px] bg-briefing-red/30 mt-2"></div>
+</div>
+<!-- Large background text -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-[25vw] text-white/[0.02] select-none tracking-tighter uppercase whitespace-nowrap">
+            DISPATCH
+        </div>
+</div>
+<div class="max-w-7xl w-full text-center relative z-20">
+<div class="font-mono text-briefing-red text-xs mb-8 tracking-[0.8em] flex items-center justify-center gap-4">
+<span class="w-16 h-px bg-briefing-red/40"></span>
+            NEXT-GEN DISPATCH SOLUTIONS
+<span class="w-16 h-px bg-briefing-red/40"></span>
+</div>
+<h1 class="text-5xl md:text-7xl lg:text-[7rem] font-bold text-white leading-[0.9] tracking-tighter mb-12 uppercase italic text-glow">
+            The All-in-One <br/> Command Center for <br/> <span class="text-transparent bg-clip-text bg-gradient-to-br from-briefing-red via-orange-500 to-briefing-red bg-[length:200%_auto] animate-pulse">Modern Towing Fleets.</span>
+</h1>
+<div class="flex flex-col items-center max-w-3xl mx-auto">
+<p class="text-xl text-slate-400 font-light leading-relaxed mb-12 tracking-wide uppercase font-mono text-[14px]">
+                Streamline your operations with real-time dispatching, automated tracking, and seamless invoicing. Towix provides the precision intelligence needed for high-volume fleet management.
+            </p>
+<div class="flex flex-col sm:flex-row gap-8 items-center">
+<button class="group relative px-12 py-5 bg-briefing-red text-white overflow-hidden transition-all hover:scale-105 active:scale-95">
+<span class="relative z-10 font-mono text-xs font-bold tracking-[0.4em]">BOOK A DEMO</span>
+<div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform"></div>
+</button>
+<button class="group relative px-12 py-5 border border-white/20 text-white overflow-hidden transition-all hover:border-briefing-red/50">
+<span class="relative z-10 font-mono text-xs font-bold tracking-[0.4em]">SEE HOW IT WORKS</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom stats bar for Hero -->
+<div class="absolute bottom-10 left-0 w-full px-12 hidden lg:flex justify-between items-end font-mono text-[10px] text-slate-500 tracking-widest uppercase">
+<div class="flex gap-12">
+<div>FLEET_CORE: <span class="text-white">ONLINE</span></div>
+<div>UPTIME: <span class="text-white">99.9%</span></div>
+</div>
+<div class="text-right">
+            LICENSE_ID: <span class="text-briefing-red">TX-DISPATCH-2024</span><br/>
+            DATA_ENCRYPTION: <span class="text-white">VERIFIED</span>
+</div>
+</div>
+</section>
+<div class="border-y border-white/5 bg-white/[0.02] py-6 overflow-hidden flex items-center whitespace-nowrap">
+<div class="flex gap-20 animate-marquee font-mono text-[10px] tracking-[0.5em] text-white/20 uppercase italic">
+<span>Automated Job Routing // Real-Time GPS Telemetry // Municipal Compliance Integration // Zero-Latency Dispatch // Secure Payment Processing // Automated Job Routing // Real-Time GPS Telemetry // Municipal Compliance Integration // Zero-Latency Dispatch // Secure Payment Processing</span>
+</div>
+</div>
+<section class="py-32 px-6" id="objectives">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+<div class="max-w-xl">
+<div class="font-mono text-briefing-red text-[10px] mb-4 tracking-[0.4em]">CORE_SYSTEM_SOLUTIONS</div>
+<h2 class="text-4xl lg:text-6xl font-bold text-white tracking-tighter">MAXIMIZE FLEET EFFICIENCY.</h2>
+</div>
+<div class="text-right font-mono text-[10px] text-slate-500">
+                        VER: TOW_PRO_4.0<br/>
+                        ESTABLISHED: 2024
+                    </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
+<div class="group relative bg-white/[0.02] border border-white/5 p-8 transition-all hover:bg-briefing-red/[0.03] hover:border-briefing-red/30">
+<div class="text-briefing-red mb-8">
+<span class="material-symbols-outlined text-4xl">call</span>
+</div>
+<h3 class="font-mono text-sm font-bold text-white mb-4 tracking-widest uppercase">Call Management</h3>
+<p class="text-xs text-slate-400 leading-relaxed mb-6 font-light">
+                            Intelligent call intake with automated data extraction and sub-second job validation.
+                        </p>
+<div class="font-mono text-[9px] text-white/30 flex justify-between">
+<span>MOD_01</span>
+<span class="group-hover:text-briefing-red transition-colors">ACTIVE</span>
+</div>
+</div>
+<div class="group relative bg-white/[0.02] border border-white/5 p-8 transition-all hover:bg-hologram/[0.03] hover:border-hologram/30">
+<div class="text-hologram mb-8">
+<span class="material-symbols-outlined text-4xl">location_on</span>
+</div>
+<h3 class="font-mono text-sm font-bold text-white mb-4 tracking-widest uppercase">Live Fleet Tracking</h3>
+<p class="text-xs text-slate-400 leading-relaxed mb-6 font-light">
+                            Real-time GPS visualization of every unit in your fleet. Monitor arrival times and route efficiency.
+                        </p>
+<div class="font-mono text-[9px] text-white/30 flex justify-between">
+<span>MOD_02</span>
+<span class="group-hover:text-hologram transition-colors">ACTIVE</span>
+</div>
+</div>
+<div class="group relative bg-white/[0.02] border border-white/5 p-8 transition-all hover:bg-briefing-red/[0.03] hover:border-briefing-red/30">
+<div class="text-briefing-red mb-8">
+<span class="material-symbols-outlined text-4xl">receipt_long</span>
+</div>
+<h3 class="font-mono text-sm font-bold text-white mb-4 tracking-widest uppercase">Automated Invoicing</h3>
+<p class="text-xs text-slate-400 leading-relaxed mb-6 font-light">
+                            Generate digital invoices instantly upon job completion with secure payment gateway integration.
+                        </p>
+<div class="font-mono text-[9px] text-white/30 flex justify-between">
+<span>MOD_03</span>
+<span class="group-hover:text-briefing-red transition-colors">ACTIVE</span>
+</div>
+</div>
+<div class="group relative bg-white/[0.02] border border-white/5 p-8 transition-all hover:bg-hologram/[0.03] hover:border-hologram/30">
+<div class="text-hologram mb-8">
+<span class="material-symbols-outlined text-4xl">analytics</span>
+</div>
+<h3 class="font-mono text-sm font-bold text-white mb-4 tracking-widest uppercase">Performance Analytics</h3>
+<p class="text-xs text-slate-400 leading-relaxed mb-6 font-light">
+                            Data-driven insights into operator performance, regional demand, and business profitability.
+                        </p>
+<div class="font-mono text-[9px] text-white/30 flex justify-between">
+<span>MOD_04</span>
+<span class="group-hover:text-hologram transition-colors">ACTIVE</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 bg-black/40" id="timeline">
+<div class="max-w-5xl mx-auto px-6">
+<div class="text-center mb-24">
+<div class="font-mono text-hologram text-[10px] mb-4 tracking-[0.4em]">DISPATCH_WORKFLOW</div>
+<h2 class="text-4xl lg:text-5xl font-bold text-white tracking-tighter">OPERATIONAL LIFECYCLE.</h2>
+</div>
+<div class="space-y-12 relative">
+<div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+<div class="relative flex flex-col md:flex-row items-start md:items-center gap-12 group">
+<div class="w-full md:w-1/2 md:text-right">
+<h4 class="font-mono text-lg text-white mb-2 uppercase tracking-tighter">01. Job Intake</h4>
+<p class="text-sm text-slate-500 max-w-sm md:ml-auto">Rapid call logging and immediate vehicle triage. Automated data verification via field-input tools.</p>
+</div>
+<div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-briefing-red shadow-[0_0_15px_#EE6352] rounded-full z-20 group-hover:scale-150 transition-transform"></div>
+<div class="w-full md:w-1/2 pl-12 md:pl-0">
+<div class="inline-block bg-white/5 border border-white/10 p-2 font-mono text-[9px] text-briefing-red">
+                                [ PENDING_JOB ]
+                            </div>
+</div>
+</div>
+<div class="relative flex flex-col md:flex-row-reverse items-start md:items-center gap-12 group">
+<div class="w-full md:w-1/2">
+<h4 class="font-mono text-lg text-white mb-2 uppercase tracking-tighter">02. Fleet Routing</h4>
+<p class="text-sm text-slate-500 max-w-sm">Smart assignment to the optimal recovery unit. Integrated navigation push for faster arrivals.</p>
+</div>
+<div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-hologram shadow-[0_0_15px_#00d4ff] rounded-full z-20 group-hover:scale-150 transition-transform"></div>
+<div class="w-full md:w-1/2 pr-12 md:pr-0 md:text-right">
+<div class="inline-block bg-white/5 border border-white/10 p-2 font-mono text-[9px] text-hologram">
+                                [ UNIT_EN_ROUTE ]
+                            </div>
+</div>
+</div>
+<div class="relative flex flex-col md:flex-row items-start md:items-center gap-12 group">
+<div class="w-full md:w-1/2 md:text-right">
+<h4 class="font-mono text-lg text-white mb-2 uppercase tracking-tighter">03. Job Completion</h4>
+<p class="text-sm text-slate-500 max-w-sm md:ml-auto">Instant digital invoicing and automated payment collection. Fleet availability updated automatically.</p>
+</div>
+<div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-green-500 shadow-[0_0_15px_#10b981] rounded-full z-20 group-hover:scale-150 transition-transform"></div>
+<div class="w-full md:w-1/2 pl-12 md:pl-0">
+<div class="inline-block bg-white/5 border border-white/10 p-2 font-mono text-[9px] text-green-500">
+                                [ JOB_FINALIZED ]
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-32 px-6 relative overflow-hidden" id="deployment">
+<div class="absolute inset-0 bg-briefing-red opacity-5 blur-[150px]"></div>
+<div class="max-w-4xl mx-auto text-center relative z-10 border border-white/5 bg-slate-900/40 backdrop-blur-3xl p-12 lg:p-24">
+<div class="font-mono text-briefing-red text-[10px] mb-10 tracking-[1em]">SYSTEM_READY_FOR_DEPLOYMENT</div>
+<h2 class="text-5xl lg:text-7xl font-bold text-white tracking-tighter mb-8 leading-none">
+                    MODERNIZE YOUR <br/> DISPATCH CENTER.
+                </h2>
+<p class="text-lg text-slate-400 mb-12 max-w-xl mx-auto font-light">
+                    Join the industry leaders using Towix to power their recovery operations. Scale your fleet with absolute reliability and zero latency.
+                </p>
+<div class="flex flex-col items-center gap-6">
+<button class="relative group px-12 py-6 bg-white text-black font-bold font-mono tracking-[0.4em] transition-all hover:bg-briefing-red hover:text-white">
+                        INITIALIZE_DEMO
+                        <div class="absolute -inset-2 border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+<div class="flex items-center gap-3 font-mono text-[9px] text-white/40 tracking-widest">
+<span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#10b981]"></span>
+                        SECURE_DISPATCH_ENCRYPTION_ACTIVE
+                    </div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-black py-20 px-8 border-t border-white/5">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-20">
+<div class="lg:col-span-2">
+<div class="flex flex-col gap-2 mb-8">
+<span class="text-xl font-bold text-white tracking-tighter uppercase">Towix Dispatch Pro</span>
+<span class="font-mono text-[10px] text-briefing-red tracking-[0.5em]">FLEET DOMINANCE</span>
+</div>
+<p class="text-xs text-slate-600 max-w-sm font-mono leading-relaxed uppercase">
+                        Premium dispatching software engineered for high-volume towing environments. Providing industry-leading tracking and invoicing protocols.
+                    </p>
+</div>
+<div>
+<h5 class="text-white font-mono text-[10px] tracking-widest mb-8 uppercase text-white/60">PLATFORM</h5>
+<ul class="space-y-4 font-mono text-[10px] text-slate-500 tracking-widest">
+<li><a class="hover:text-briefing-red transition-colors" href="#">[ API_ACCESS ]</a></li>
+<li><a class="hover:text-briefing-red transition-colors" href="#">[ FLEET_DASHBOARD ]</a></li>
+<li><a class="hover:text-briefing-red transition-colors" href="#">[ NETWORK_UPTIME ]</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-white font-mono text-[10px] tracking-widest mb-8 uppercase text-white/60">LEGAL</h5>
+<ul class="space-y-4 font-mono text-[10px] text-slate-500 tracking-widest">
+<li><a class="hover:text-briefing-red transition-colors" href="#">[ DATA_PRIVACY ]</a></li>
+<li><a class="hover:text-briefing-red transition-colors" href="#">[ SERVICE_LEVELS ]</a></li>
+<li><a class="hover:text-briefing-red transition-colors" href="#">[ SUPPORT_CENTER ]</a></li>
+</ul>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-12 border-t border-white/5 font-mono text-[9px] text-slate-700 tracking-[0.3em]">
+<div>© 2024 TOWIX_CORP. ALL_RIGHTS_RESERVED.</div>
+<div class="flex gap-8">
+<a class="hover:text-white transition-colors" href="#">LINKED_IN</a>
+<a class="hover:text-white transition-colors" href="#">TERMINAL_X</a>
+<a class="hover:text-white transition-colors" href="#">SIGNAL_COMM</a>
+</div>
+<div class="text-briefing-red/40 animate-pulse">FLEET_SYNC_0.02ms_LATENCY</div>
+</div>
+</div>
+</footer>
+<style>
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
+        }
+    </style>
+</body></html>
