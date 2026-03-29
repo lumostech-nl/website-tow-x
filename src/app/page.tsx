@@ -1,3 +1,5 @@
+import { FaWhatsapp } from 'react-icons/fa';
+
 export default function Home() {
   return (
     <>
@@ -13,7 +15,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 w-full z-50 px-6 py-5 flex justify-between items-center border-b border-black/5 bg-white/80 backdrop-blur-md">
         <div className="flex flex-col">
           <span className="text-2xl font-bold text-gray-900 tracking-tighter">
-            TOWIX <span className="text-[#EE6352]">/</span> PRO
+            Towx <span className="text-[#EE6352]">/</span> PRO
           </span>
         </div>
         <div className="hidden lg:flex items-center gap-12 font-mono text-[10px] tracking-[0.3em]">
@@ -23,7 +25,15 @@ export default function Home() {
           <a className="hover:text-[#EE6352] transition-colors text-gray-900 border-b border-black/20 pb-1" href="#deploy">[ GET STARTED ]</a>
         </div>
         <div className="font-mono text-[10px] tracking-widest text-gray-500">
-                    <span className="text-xs font-mono tracking-[0.5em] text-[#EE6352]">DISPATCH PLATFORM</span>
+                    <a
+                      href="https://wa.me/14375668699"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-3 text-sm font-bold font-mono tracking-[0.4em] text-[#25d366] hover:text-[#25d366]/70 transition-colors"
+                    >
+                      <FaWhatsapp className="h-5 w-5" />
+                      +1 437 566 8699
+                    </a>
 
         </div>
       </nav>
@@ -60,7 +70,7 @@ export default function Home() {
 
             <div className="flex flex-col items-center max-w-3xl mx-auto">
               <p className="text-gray-600 font-light leading-relaxed mb-12 tracking-wide uppercase font-mono text-[14px]">
-                Streamline your operations with real-time dispatching, automated tracking, and seamless invoicing. Towix provides the precision intelligence needed for high-volume fleet management.
+                Streamline your operations with real-time dispatching, automated tracking, and seamless invoicing. Towx provides the precision intelligence needed for high-volume fleet management.
               </p>
               <div className="flex flex-col sm:flex-row gap-8 items-center">
                 <a href="https://my.tow-x.com" className="group relative px-12 py-5 bg-[#EE6352] text-white overflow-hidden transition-all hover:scale-105 active:scale-95">
@@ -211,7 +221,7 @@ export default function Home() {
               MODERNIZE YOUR <br /> DISPATCH CENTER.
             </h2>
             <p className="text-lg text-gray-600 mb-12 max-w-xl mx-auto font-light">
-              Join the industry leaders using Towix to power their recovery operations. Scale your fleet with absolute reliability and zero latency.
+              Join the industry leaders using Towx to power their recovery operations. Scale your fleet with absolute reliability and zero latency.
             </p>
             <div className="flex flex-col items-center gap-6">
               <a href="https://my.tow-x.com" className="relative group px-12 py-6 bg-[#EE6352] text-white font-bold font-mono tracking-[0.4em] transition-all hover:bg-gray-900 hover:text-white">
@@ -229,7 +239,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-20">
             <div className="lg:col-span-2">
               <div className="flex flex-col gap-2 mb-8">
-                <span className="text-xl font-bold text-gray-900 tracking-tighter uppercase">Towix Dispatch Pro</span>
+                <span className="text-xl font-bold text-gray-900 tracking-tighter uppercase">Towx Dispatch Pro</span>
                 <span className="font-mono text-[10px] text-[#EE6352] tracking-[0.5em]">FLEET DOMINANCE</span>
               </div>
               <p className="text-xs text-gray-400 max-w-sm font-mono leading-relaxed uppercase">
@@ -254,7 +264,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-12 border-t border-black/5 font-mono text-[9px] text-gray-400 tracking-[0.3em]">
-            <div>© 2024 TOWIX_CORP. ALL_RIGHTS_RESERVED.</div>
+            <div>© 2024 Towx_CORP. ALL_RIGHTS_RESERVED.</div>
             <div className="flex gap-8">
               <a className="hover:text-gray-900 transition-colors" href="#">LINKED_IN</a>
               <a className="hover:text-gray-900 transition-colors" href="#">TERMINAL_X</a>

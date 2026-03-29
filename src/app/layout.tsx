@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Towix | Towing Dispatch Command Center",
+  title: "Towx | Towing Dispatch Command Center",
   description:
     "Streamline your operations with real-time dispatching, automated tracking, and seamless invoicing.",
 };
